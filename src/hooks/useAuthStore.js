@@ -13,11 +13,11 @@ export const useAuthStore = () => {
         dispatch(onChecking())
 
         try {
-            const {data} = await calendarApi.post( '/auth' , {email, password} )
+            const {data} = await calendarApi.post('/auth', {email, password} )
             localStorage.setItem('token', data.token)
             localStorage.setItem('token-init-date', new Date().getTime())
             dispatch(onLogin({ name: data.name, uid: data.uid }))
-
+            console.log(data)
         } catch (error) {
             console.log({error})
         }
@@ -25,7 +25,9 @@ export const useAuthStore = () => {
 
     return{
         // Propiedades
-        status, user, errorMesagge,
+        errorMesagge,
+        status,
+        user,
 
         // Metodos
         startLogin,
