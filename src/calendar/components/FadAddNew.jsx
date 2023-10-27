@@ -15,8 +15,8 @@ export const FadAddNew = () => {
             end: addHours(new Date(), 2 ),
             bgColor: '#fafafa',
             user:{
-                _id: '1233',
-                name: 'Nicolas'
+                _id: '',
+                name: ''
             }
         })
         openDateModal()

@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import calendarApi from "../api/calendarApi"
 import { onChecking, onClearErrorMessage, onLogOut, onLogin } from "../store/auth/authSlice"
+import { onLogOutCalendar } from "../store/calendar/calendarSlice"
 
 
 export const useAuthStore = () => {
@@ -17,7 +18,6 @@ export const useAuthStore = () => {
             localStorage.setItem('token', data.token)
             localStorage.setItem('token-init-date', new Date().getTime())
             dispatch(onLogin({ name: data.name, uid: data.uid }))
-            console.log(data)
         } catch (error) {
             dispatch(onLogOut('Credenciales Incorrectas'))
 
@@ -36,7 +36,6 @@ export const useAuthStore = () => {
             localStorage.setItem('token', data.token)
             localStorage.setItem('token-init-date', new Date().getTime())
             dispatch(onLogin({ name: data.name, uid: data.uid  }))
-            console.log(data)
         } catch (error) {
             console.log(error)
             dispatch(onLogOut(error.response.data.message ))
@@ -52,7 +51,7 @@ export const useAuthStore = () => {
         if (!token) return dispatch(onLogOut())
 
         try {
-            const {data} = await calendarApi.get( '/auth/renew' )
+            const {data} = await calendarApi.get( 'auth/renew' )
             localStorage.setItem('token', data.token)
             localStorage.setItem('token-init-date', new Date().getTime())
             dispatch(onLogin({ name: data.name, uid: data.uid  }))
@@ -65,6 +64,7 @@ export const useAuthStore = () => {
 
     const startLogOut = () => {
         localStorage.clear()
+        dispatch(onLogOutCalendar())
         dispatch(onLogOut())
     }
 
